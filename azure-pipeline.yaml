@@ -3,11 +3,11 @@ trigger:
 
 variables:
   azureSubscription: dev-az-devops-cicd
-  appName: remote-connect
+  appName: az-func
   containerRegistry: josegrelnx
   dockerRegistryServiceConnection: docker-hub
-  buildImageRepository: josegrelnx/python-calc
-  imageRepository: python-calc
+  buildImageRepository: josegrelnx/az-func
+  imageRepository: az-func
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: latest
   pool: Ubuntu Local
