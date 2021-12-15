@@ -3,7 +3,7 @@ trigger:
 
 variables:
   azureSubscription: dev-az-devops-cicd
-  appName: az-func
+  appName: az-func-remote
   containerRegistry: josegrelnx
   dockerRegistryServiceConnection: docker-hub
   buildImageRepository: josegrelnx/az-func
