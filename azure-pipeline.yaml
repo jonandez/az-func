@@ -1,0 +1,36 @@
+trigger:
+- main
+
+variables:
+  azureSubscription: dev-az-devops-cicd
+  appName: remote-connect
+  containerRegistry: josegrelnx
+  dockerRegistryServiceConnection: docker-hub
+  buildImageRepository: josegrelnx/python-calc
+  imageRepository: python-calc
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  tag: latest
+  pool: Ubuntu Local
+
+stages:
+- stage: Build
+  displayName: Build and push container image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool: $(pool)
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(buildImageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+    - task: AzureFunctionAppContainer@1 # Add this at the end of your file
+      inputs:
+        azureSubscription: $(azureSubscription)
+        appName: $(appName)
+        imageName: $(containerRegistry)/$(imageRepository):$(tag)
